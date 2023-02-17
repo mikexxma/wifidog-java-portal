@@ -6,11 +6,16 @@
 package net.fangstar.wifi.portal.util;
 
 import java.security.SecureRandom;
+import java.security.Security;
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
+import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
+
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.binary.Hex;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,20 +33,34 @@ public final class Codes {
      */
     private static final Logger LOGGER = LoggerFactory.getLogger(Codes.class);
 
-    /**
-     * AES 加密.
-     *
-     * @param content 指定的加密内容（明文）
-     * @param key 指定的密钥
-     * @return 加密结果（密文）
-     * @see #decryptByAES(java.lang.String, java.lang.String)
-     */
+
+
+    public static String encrypt(String value) {
+        try {
+            Security.addProvider(new BouncyCastleProvider());
+            String key_str = "j0w9e8r7t6y5a4sd"; // 密匙
+            String iv_str = "j7d2h2jfg3j1d1g3"; // 偏移量
+
+            IvParameterSpec iv = new IvParameterSpec(iv_str.getBytes("UTF-8"));
+            SecretKeySpec skeySpec = new SecretKeySpec(key_str.getBytes("UTF-8"), "AES");
+
+            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS7Padding");
+            cipher.init(Cipher.ENCRYPT_MODE, skeySpec, iv);
+
+            byte[] encrypted = cipher.doFinal(value.getBytes());
+            return Base64.encodeBase64String(encrypted);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
     public static String encryptByAES(final String content, final String key) {
         try {
             final KeyGenerator kgen = KeyGenerator.getInstance("AES");
-            final SecureRandom secureRandom = SecureRandom.getInstance("SHA1PRNG");
-            secureRandom.setSeed(key.getBytes());
-            kgen.init(128, secureRandom);
+//            final SecureRandom secureRandom = SecureRandom.getInstance("SHA1PRNG");
+//            secureRandom.setSeed(key.getBytes());
+//            kgen.init(128, secureRandom);
             final SecretKey secretKey = kgen.generateKey();
             final byte[] enCodeFormat = secretKey.getEncoded();
             final SecretKeySpec keySpec = new SecretKeySpec(enCodeFormat, "AES");

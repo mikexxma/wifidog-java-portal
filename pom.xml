@@ -45,7 +45,36 @@
     </properties>
     
     <dependencies>
-        
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>4.9.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcprov-jdk15to18</artifactId>
+            <version>1.64</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.28</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+            <exclusions>
+                <!-- 排除自带的logback依赖 -->
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid</artifactId>
@@ -104,7 +133,7 @@
             <artifactId>slf4j-log4j12</artifactId>
             <version>${slf4j.version}</version>
         </dependency>
-        
+
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
@@ -116,7 +145,7 @@
             <artifactId>commons-codec</artifactId>
             <version>${commons-codec.version}</version>
         </dependency>
-        
+
     </dependencies>
     
     <build>
@@ -164,8 +193,8 @@
                     </mapping>
                     <useDefaultMapping>true</useDefaultMapping>
                     <properties>
-                        <year>2016</year>
-                        <devTeam>fangstar.com</devTeam>
+                        <year>2023</year>
+                        <devTeam>mike.ma@zenlayer.com</devTeam>
                     </properties>
                     <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>

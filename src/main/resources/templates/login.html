@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Login - Turbo</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+    body {
+        background-color: #f7fafc;
+        font-family: Arial, sans-serif;
+    }
+    .container {
+        max-width: 500px;
+        margin: auto;
+        margin-top: 50px;
+        border: 1px solid #e2e8f0;
+        padding: 30px;
+        border-radius: 4px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        background-color: #fff;
+    }
+    h1 {
+        font-size: 28px;
+        font-weight: bold;
+        margin-bottom: 30px;
+        color: #2d3748;
+    }
+    label {
+        display: block;
+        margin-bottom: 10px;
+        color: #4a5568;
+    }
+    input[type="text"],
+    input[type="password"] {
+        width: 95%;
+        padding: 10px;
+        border: 1px solid #e2e8f0;
+        border-radius: 4px;
+        margin-bottom: 20px;
+        font-size: 16px;
+        color: #4a5568;
+    }
+    input[type="submit"] {
+        background-color: #4299e1;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+    input[type="submit"]:hover {
+        background-color: #3182ce;
+    }
+    .error {
+        color: #c53030;
+        font-size: 14px;
+        margin-top: 10px;
+    }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Login to Turbo WIFI</h1>
+    <form method="POST"  action="/wifidog/login">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" />
+
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" />
+
+        <input type="submit" value="Login" />
+
+    </form>
+</div>
+
+<!--<form action="/wifidog/login" method="post">-->
+<!--    <input type="text" name="username" placeholder="Username"/>-->
+<!--    <input type="password" name="password" placeholder="Password"/>-->
+<!--    <button type="submit">Login</button>-->
+<!--</form>-->
+<script>
+    function login() {
+        var username = document.getElementById("username").value;
+        var password = document.getElementById("password").value;
+        var formData = new FormData();
+        formData.append("username", username);
+        formData.append("password", password);
+        fetch("/wifidog/login", {
+            method: "POST",
+            body: formData
+        })
+            .then(response => response.text())
+            .then(data => console.log(data))
+            .catch(error => console.error(error));
+    }
+</script>
+</body>
+</html>
